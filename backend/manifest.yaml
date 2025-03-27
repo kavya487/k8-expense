@@ -3,42 +3,40 @@ kind: Deployment
 metadata:
   name: backend
   namespace: expense
+  # labels of deployment resource
   labels:
     app: backend
     tier: backend
-    purpose: expense
-    
+    project: expense
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: backend
       tier: backend
-      purpose: expense
+      project: expense
   template:
     metadata:
       labels:
         app: backend
         tier: backend
-        purpose: expense
+        project: expense
     spec:
       containers:
       - name: nginx
-        image: kavya478/mysql:1.0.0
-        
+        image: joindevops/backend:1.0.0
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
   name: backend
   namespace: expense
 spec:
-  selector:
+  selector: # labels are used as selectors
     app: backend
     tier: backend
-    purpose: expense
+    project: expense
   ports:
   - protocol: TCP
-    port: 8080
+    port: 8080 # service port
     targetPort: 8080
